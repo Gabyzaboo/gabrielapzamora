@@ -242,5 +242,63 @@ if (skillsSection) {
   });
   
   skillsObserver.observe(skillsSection);
-}
+}4// Funcionalidad del modal - agregar al final de tu script.js
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Seleccionar todos los botones que abren modales
+  const modalTriggers = document.querySelectorAll('.modal-trigger');
+  const modals = document.querySelectorAll('.modal');
+  const closeBtns = document.querySelectorAll('.close');
+
+  // Función para abrir modal
+  function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.style.display = 'block';
+      document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+    }
+  }
+
+  // Función para cerrar modal
+  function closeModal(modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // Restaurar scroll del body
+  }
+
+  // Event listeners para botones que abren modales
+  modalTriggers.forEach(trigger => {
+    trigger.addEventListener('click', function() {
+      const modalId = this.getAttribute('data-modal');
+      openModal(modalId);
+    });
+  });
+
+  // Event listeners para botones de cerrar (X)
+  closeBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const modal = this.closest('.modal');
+      closeModal(modal);
+    });
+  });
+
+  // Cerrar modal al hacer click fuera del contenido
+  modals.forEach(modal => {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeModal(modal);
+      }
+    });
+  });
+
+  // Cerrar modal con tecla ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      modals.forEach(modal => {
+        if (modal.style.display === 'block') {
+          closeModal(modal);
+        }
+      });
+    }
+  });
+});
 
